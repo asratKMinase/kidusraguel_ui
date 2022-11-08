@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { createContext, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ContactUs from "./components/addresses/contact-us";
+import Slider from "./components/slider.js/image";
+import UserLogin from "./components/users/user-login";
+import UserRigster from "./components/users/user-register";
+import Welcome from "./components/welcome/main-page";
+
+export const userContext = createContext();
 
 function App() {
+
+  const [user, setUser] = useState({username: "preist" })
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+      <userContext.Provider value={[user, setUser]}>
+          <Routes>  
+            <Route path="/" element={<Slider />} />     
+            <Route path="/login" element={<UserLogin />} />   
+            <Route path="/register" element={<UserRigster />} /> 
+            <Route path="/contactUs" element={<ContactUs />} />       
+          </Routes>
+    </userContext.Provider>
+    </BrowserRouter>
+  
+    </>
   );
 }
 
